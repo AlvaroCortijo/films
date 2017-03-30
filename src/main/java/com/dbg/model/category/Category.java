@@ -2,12 +2,23 @@ package com.dbg.model.category;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "category")
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = -6850865486572251075L;
 
+	@Id
+	@GeneratedValue
 	private Integer id;
 
+	@Column(unique = true)
 	private String name;
 
 	public Integer getId() {
