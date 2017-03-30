@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.dbg.model.film.Film;
 
 @Repository
-public interface FilmDao extends PagingAndSortingRepository<Film, String> {
+public interface FilmDao extends PagingAndSortingRepository<Film, Integer> {
 	
 	public List<Film> findByTitleContaining(String title);
 }
