@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.dbg.model.category.Category;
 
 @Repository
-public interface CategoryDao extends PagingAndSortingRepository<Category, String> {
+public interface CategoryDao extends PagingAndSortingRepository<Category, Integer> {
 
 	List<Category> findByNameLike(String name);
 	
