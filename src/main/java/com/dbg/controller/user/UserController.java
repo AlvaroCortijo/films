@@ -22,6 +22,7 @@ public class UserController {
 		return userService.create(userDTO);
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public UserDTO findById(@PathVariable("id") Integer id){
 		return userService.findById(id);
 	}
