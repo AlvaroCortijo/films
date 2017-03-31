@@ -1,5 +1,8 @@
 package com.dbg.service.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,14 @@ public class UserServiceImpl implements UserService {
 			return transform(userDao.findOne(id));
 	}
 
+	@Override
+	public List<UserDTO> findAll() {
+		final Iterable<User> users = userDao.findAll();
+		final List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+		users.forEach(u -> { usersDTO.add(transform(u)); });
+		return usersDTO;
+	}
+	
 	@Override
 	public UserDTO update(UserDTO userDTO) {
 		final User user = transform(userDTO);
