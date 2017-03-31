@@ -5,8 +5,9 @@ import com.dbg.model.user.User;
 
 public interface UserService {
 	
-	UserDTO create(UserDTO user);
+	UserDTO create(UserDTO userDTO);
 	UserDTO findById(Integer id);
+	UserDTO update(UserDTO userDTO);
 	UserDTO transform(User user);
 	User transform(UserDTO userDTO);
 }

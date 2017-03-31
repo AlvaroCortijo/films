@@ -26,4 +26,9 @@ public class UserController {
 	public UserDTO findById(@PathVariable("id") Integer id){
 		return userService.findById(id);
 	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public UserDTO update(@PathVariable("id") Integer id, @RequestBody UserDTO userDTO){
+		return userService.update(userDTO);
+	}
 }
