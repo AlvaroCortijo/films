@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void delete(Integer id) {
+		userDao.delete(id);
+	}
+	
+	@Override
 	public UserDTO transform(User user) {
 		final UserDTO userDTO = new UserDTO(user.getId(), user.getName());
 		return userDTO;
