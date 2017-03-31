@@ -17,8 +17,13 @@ public class UserServiceImpl implements UserService {
 	public UserDTO create(UserDTO userDTO) {
 		final User user = transform(userDTO);
 		return transform(userDao.save(user));
-		
 	}
+	
+	@Override
+	public UserDTO findById(Integer id) {
+			return transform(userDao.findOne(id));
+	}
+	
 	@Override
 	public UserDTO transform(User user) {
 		final UserDTO userDTO = new UserDTO(user.getId(), user.getName());
