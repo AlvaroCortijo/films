@@ -1,5 +1,7 @@
 package com.dbg.controller.film;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dbg.dto.film.FilmDTO;
-import com.dgb.service.film.FilmService;
+import com.dbg.service.film.FilmService;
 
 @RestController
 @RequestMapping(value="/film")

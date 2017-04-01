@@ -1,4 +1,4 @@
-package com.dgb.service.film;
+package com.dbg.service.film;
 
 import com.dbg.dto.film.FilmDTO;
 import com.dbg.model.film.Film;

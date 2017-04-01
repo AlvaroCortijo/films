@@ -1,4 +1,4 @@
-package com.dgb.service.film;
+package com.dbg.service.film;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
