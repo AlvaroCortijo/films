@@ -20,6 +20,11 @@ public class FilmServiceImpl implements FilmService {
 	}
 
 	@Override
+	public FilmDTO findById(Integer id) {
+		return transform(filmDao.findOne(id));
+	}
+	
+	@Override
 	public void delete(Integer id) {
 		filmDao.delete(id);
 	}

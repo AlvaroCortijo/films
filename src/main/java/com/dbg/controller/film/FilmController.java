@@ -24,6 +24,11 @@ public class FilmController {
 		return filmService.create(filmDTO);
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public FilmDTO findById(@PathVariable("id") Integer id){
+		return filmService.findById(id);
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable("id") Integer id){
 		filmService.delete(id);
