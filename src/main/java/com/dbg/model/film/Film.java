@@ -32,7 +32,7 @@ public class Film implements Serializable {
 	@Column(nullable = false)
 	private Integer year;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Category category;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="film")

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,10 @@ public class Evaluation implements Serializable {
 	@Column(nullable = false)
 	private Integer points;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Film film;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 	
 	public User getUser() {
