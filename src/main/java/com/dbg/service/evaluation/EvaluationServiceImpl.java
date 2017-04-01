@@ -3,6 +3,8 @@ package com.dbg.service.evaluation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 
 	@Autowired
 	private EvaluationDao evaluationDao;
+	
+	private static final Logger log = LoggerFactory.getLogger(EvaluationServiceImpl.class);
 
 	@Override
 	public List<EvaluationDTO> findAll(Integer idUser, Integer idFilm, Integer idCategory) {
@@ -30,6 +34,25 @@ public class EvaluationServiceImpl implements EvaluationService {
 		final List<EvaluationDTO> evaluationsDTO = new ArrayList<EvaluationDTO>();
 		evaluations.forEach(e -> evaluationsDTO.add(transform(e)));
 		return evaluationsDTO;
+	}
+	
+	@Override
+	public EvaluationDTO create(EvaluationDTO evaluationDTO) {
+		final Evaluation evaluation = transform(evaluationDTO);
+		return transform(evaluationDao.save(evaluation));
+	}
+
+	@Override
+	public EvaluationDTO update(Integer id, EvaluationDTO evaluationDTO) {
+		final Evaluation evaluation = evaluationDao.findOne(id);
+		evaluation.setPoints(evaluationDTO.getPoints());
+		log.debug(String.format("Actualizando evaluation con id %d y points %d", evaluation.getId(), evaluation.getPoints()));
+		return transform(evaluationDao.save(evaluation));
+	}
+
+	@Override
+	public void delete(Integer id) {
+		evaluationDao.delete(id);
 	}
 	
 	@Override
