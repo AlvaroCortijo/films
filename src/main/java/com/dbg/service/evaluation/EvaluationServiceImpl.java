@@ -15,6 +15,22 @@ public class EvaluationServiceImpl implements EvaluationService {
 
 	@Autowired
 	private EvaluationDao evaluationDao;
+
+	@Override
+	public List<EvaluationDTO> findAll(Integer idUser, Integer idFilm, Integer idCategory) {
+		final List<Evaluation> evaluations = evaluationDao.findByUserIdAndFilmIdAndCategoryId(idUser, idFilm, idCategory);
+		final List<EvaluationDTO> evaluationsDTO = new ArrayList<EvaluationDTO>();
+		evaluations.forEach(e -> evaluationsDTO.add(transform(e)));
+		return evaluationsDTO;
+	}
+	
+	@Override
+	public List<EvaluationDTO> findAll(String name, String title) {
+		final List<Evaluation> evaluations = evaluationDao.findByUserNameAndFilmTitle(name, title);
+		final List<EvaluationDTO> evaluationsDTO = new ArrayList<EvaluationDTO>();
+		evaluations.forEach(e -> evaluationsDTO.add(transform(e)));
+		return evaluationsDTO;
+	}
 	
 	@Override
 	public EvaluationDTO transform(Evaluation evaluation) {
@@ -28,14 +44,6 @@ public class EvaluationServiceImpl implements EvaluationService {
 		final Evaluation evaluation = new Evaluation();
 		evaluation.setPoints(evaluationDTO.getPoints());
 		return evaluation;
-	}
-
-	@Override
-	public List<EvaluationDTO> findAll(Integer idUser, Integer idFilm) {
-		final List<Evaluation> evaluations = evaluationDao.findByUserIdAndFilmId(idUser, idFilm);
-		final List<EvaluationDTO> evaluationsDTO = new ArrayList<EvaluationDTO>();
-		evaluations.forEach(e -> evaluationsDTO.add(transform(e)));
-		return evaluationsDTO;
 	}
 
 }
