@@ -41,7 +41,7 @@ public class FilmServiceImpl implements FilmService {
 		film.setId(filmDTO.getId());
 		film.setTitle(filmDTO.getTitle());
 		film.setYear(filmDTO.getYear());
-		return null;
+		return film;
 	}
 
 }
