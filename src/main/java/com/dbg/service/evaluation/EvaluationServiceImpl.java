@@ -96,9 +96,9 @@ public class EvaluationServiceImpl implements EvaluationService {
 		log.debug(String.format("transform - evaluationDTO con points %d",evaluationPostDTO.getPoints()));
 		final Evaluation evaluation = new Evaluation();
 		evaluation.setPoints(evaluationPostDTO.getPoints());
-		final Film film = evaluationDao.findByFilmId(evaluationPostDTO.getIdFilm());
+		final Film film = evaluationDao.findFilmById(evaluationPostDTO.getIdFilm());
 		evaluation.setFilm(film);
-		final User user = evaluationDao.findByUserId(evaluationPostDTO.getIdUser());
+		final User user = evaluationDao.findUserById(evaluationPostDTO.getIdUser());
 		evaluation.setUser(user);
 		log.debug(String.format("transform - evaluation con points %d",evaluation.getPoints()));
 		return evaluation;

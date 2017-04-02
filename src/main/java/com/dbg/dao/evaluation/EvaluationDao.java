@@ -23,9 +23,9 @@ public interface EvaluationDao extends PagingAndSortingRepository<Evaluation, In
 	Evaluation findById(Integer id);
 	
 	@Query(value="select u from User u where u.id = :id")
-	User findByUserId(@Param(value="id") Integer id);
+	User findUserById(@Param(value="id") Integer id);
 
 	@Query(value="select f from Film f where f.id = :id")
-	Film findByFilmId(@Param(value="id") Integer id);
+	Film findFilmById(@Param(value="id") Integer id);
 
 }
