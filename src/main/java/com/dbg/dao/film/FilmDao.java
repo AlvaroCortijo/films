@@ -11,4 +11,5 @@ import com.dbg.model.film.Film;
 public interface FilmDao extends PagingAndSortingRepository<Film, Integer> {
 	
 	public List<Film> findByTitleContaining(String title);
+	public Film findByTitle(String title);
 }
