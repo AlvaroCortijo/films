@@ -17,4 +17,7 @@ public interface EvaluationDao extends PagingAndSortingRepository<Evaluation, In
 	
 	@Query(value = "select e from Evaluation e where (:name is null OR e.user.name LIKE %:name%) AND (:title is null OR e.film.title LIKE %:title%)")
 	List<Evaluation> findByUserNameAndFilmTitle(@Param(value="name") String name, @Param(value="title") String title);
+
+	Evaluation findById(Integer id);
+	
 }

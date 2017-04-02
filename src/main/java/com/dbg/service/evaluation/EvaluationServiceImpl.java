@@ -12,6 +12,8 @@ import com.dbg.dao.evaluation.EvaluationDao;
 import com.dbg.dao.film.FilmDao;
 import com.dbg.dao.user.UserDao;
 import com.dbg.dto.evaluation.EvaluationDTO;
+import com.dbg.exceptions.EvaluationNotFoundException;
+import com.dbg.exceptions.InvalidDataException;
 import com.dbg.model.evaluation.Evaluation;
 import com.dbg.model.film.Film;
 import com.dbg.model.user.User;
@@ -47,24 +49,40 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 	
 	@Override
-	public EvaluationDTO create(EvaluationDTO evaluationDTO) {
-		log.debug(String.format("create - evaluationDTO con points %d",evaluationDTO.getPoints()));
-		final Evaluation evaluation = transform(evaluationDTO);
-		log.debug(String.format("create - evaluation con points %d",evaluation.getPoints()));
-		return transform(evaluationDao.save(evaluation));
+	public EvaluationDTO findById(Integer id) throws EvaluationNotFoundException{
+		final Evaluation evaluation = evaluationDao.findById(id);
+		if(evaluation != null)
+			return transform(evaluation);
+		throw new EvaluationNotFoundException();
+	}
+	
+	@Override
+	public EvaluationDTO create(EvaluationDTO evaluationDTO) throws InvalidDataException{
+		if(validate(evaluationDTO)){
+			log.debug(String.format("create - evaluationDTO con points %d",evaluationDTO.getPoints()));
+			final Evaluation evaluation = transform(evaluationDTO);
+			log.debug(String.format("create - evaluation con points %d",evaluation.getPoints()));
+			return transform(evaluationDao.save(evaluation));
+		}
+		throw new InvalidDataException("Invalid evaluation data");
 	}
 
 	@Override
-	public EvaluationDTO update(Integer id, EvaluationDTO evaluationDTO) {
-		final Evaluation evaluation = evaluationDao.findOne(id);
-		evaluation.setPoints(evaluationDTO.getPoints());
-		log.debug(String.format("Actualizando evaluation con id %d y points %d", evaluation.getId(), evaluation.getPoints()));
-		return transform(evaluationDao.save(evaluation));
+	public EvaluationDTO update(Integer id, EvaluationDTO evaluationDTO) throws EvaluationNotFoundException {
+		final Evaluation evaluation = evaluationDao.findById(id);
+		if(evaluation != null){
+			evaluation.setPoints(evaluationDTO.getPoints());
+			log.debug(String.format("Actualizando evaluation con id %d y points %d", evaluation.getId(), evaluation.getPoints()));
+			return transform(evaluationDao.save(evaluation));
+		}
+		throw new EvaluationNotFoundException();
 	}
 
 	@Override
-	public void delete(Integer id) {
-		evaluationDao.delete(id);
+	public void delete(Integer id) throws EvaluationNotFoundException{
+		if(evaluationDao.findById(id) != null)
+			evaluationDao.delete(id);
+		else throw new EvaluationNotFoundException();
 	}
 	
 	@Override
@@ -93,4 +111,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 		return evaluation;
 	}
 
+	private Boolean validate(EvaluationDTO evaluationDTO){
+		return evaluationDTO != null && evaluationDTO.getPoints() != null;
+	}
+	
 }

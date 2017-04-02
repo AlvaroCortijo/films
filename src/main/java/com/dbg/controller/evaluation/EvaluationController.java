@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dbg.dto.evaluation.EvaluationDTO;
+import com.dbg.exceptions.EvaluationNotFoundException;
+import com.dbg.exceptions.InvalidDataException;
 import com.dbg.service.evaluation.EvaluationService;
 
 @RestController
@@ -36,19 +38,24 @@ public class EvaluationController {
 		return evaluationService.findAll(name, title);
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public EvaluationDTO findById(@PathVariable("id") Integer id) throws EvaluationNotFoundException{
+		return evaluationService.findById(id);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public EvaluationDTO create(@RequestBody EvaluationDTO evaluationDTO){
+	public EvaluationDTO create(@RequestBody EvaluationDTO evaluationDTO) throws InvalidDataException{
 		return evaluationService.create(evaluationDTO);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public EvaluationDTO update(@PathVariable("id") Integer id, @RequestBody EvaluationDTO evaluationDTO){
+	public EvaluationDTO update(@PathVariable("id") Integer id, @RequestBody EvaluationDTO evaluationDTO) throws EvaluationNotFoundException{
 		log.debug(String.format("Vamos a actualizar evaluation con id %d y points %d", id, evaluationDTO.getPoints()));
 		return evaluationService.update(id, evaluationDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable("id") Integer id){
+	public void delete(@PathVariable("id") Integer id) throws EvaluationNotFoundException{
 		evaluationService.delete(id);
 	}
 	
