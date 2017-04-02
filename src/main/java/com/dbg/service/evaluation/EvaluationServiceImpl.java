@@ -38,7 +38,9 @@ public class EvaluationServiceImpl implements EvaluationService {
 	
 	@Override
 	public EvaluationDTO create(EvaluationDTO evaluationDTO) {
+		log.debug(String.format("create - evaluationDTO con points %d",evaluationDTO.getPoints()));
 		final Evaluation evaluation = transform(evaluationDTO);
+		log.debug(String.format("create - evaluation con points %d",evaluation.getPoints()));
 		return transform(evaluationDao.save(evaluation));
 	}
 
@@ -64,8 +66,10 @@ public class EvaluationServiceImpl implements EvaluationService {
 
 	@Override
 	public Evaluation transform(EvaluationDTO evaluationDTO) {
+		log.debug(String.format("transform - evaluationDTO con points %d",evaluationDTO.getPoints()));
 		final Evaluation evaluation = new Evaluation();
 		evaluation.setPoints(evaluationDTO.getPoints());
+		log.debug(String.format("transform - evaluation con points %d",evaluation.getPoints()));
 		return evaluation;
 	}
 

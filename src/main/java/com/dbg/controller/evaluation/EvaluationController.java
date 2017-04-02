@@ -37,7 +37,7 @@ public class EvaluationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public EvaluationDTO create(EvaluationDTO evaluationDTO){
+	public EvaluationDTO create(@RequestBody EvaluationDTO evaluationDTO){
 		return evaluationService.create(evaluationDTO);
 	}
 	
