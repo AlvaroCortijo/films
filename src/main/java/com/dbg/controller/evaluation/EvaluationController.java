@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dbg.dto.evaluation.EvaluationDTO;
+import com.dbg.dto.evaluation.EvaluationPostDTO;
 import com.dbg.exceptions.EvaluationNotFoundException;
 import com.dbg.exceptions.InvalidDataException;
 import com.dbg.service.evaluation.EvaluationService;
@@ -44,8 +45,8 @@ public class EvaluationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public EvaluationDTO create(@RequestBody EvaluationDTO evaluationDTO) throws InvalidDataException{
-		return evaluationService.create(evaluationDTO);
+	public EvaluationDTO create(@RequestBody EvaluationPostDTO evaluationPostDTO) throws InvalidDataException{
+		return evaluationService.create(evaluationPostDTO);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
