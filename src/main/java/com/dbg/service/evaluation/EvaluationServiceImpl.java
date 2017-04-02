@@ -59,8 +59,13 @@ public class EvaluationServiceImpl implements EvaluationService {
 	
 	@Override
 	public EvaluationDTO transform(Evaluation evaluation) {
-		final EvaluationDTO evaluationDTO = 
-				new EvaluationDTO(evaluation.getPoints(), evaluation.getUser().getName(), evaluation.getFilm().getTitle());
+		final EvaluationDTO evaluationDTO = new EvaluationDTO();
+		if(evaluation.getPoints() != null)
+			evaluationDTO.setPoints(evaluation.getPoints());
+		if(evaluation.getUser() != null)
+			evaluationDTO.setName(evaluation.getUser().getName());
+		if(evaluation.getFilm() != null)
+			evaluationDTO.setTitle(evaluation.getFilm().getTitle());
 		return evaluationDTO;
 	}
 
