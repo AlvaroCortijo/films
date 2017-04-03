@@ -12,7 +12,9 @@ import com.dbg.dao.evaluation.EvaluationDao;
 import com.dbg.dto.evaluation.EvaluationDTO;
 import com.dbg.dto.evaluation.EvaluationPostDTO;
 import com.dbg.exceptions.EvaluationNotFoundException;
+import com.dbg.exceptions.FilmNotFoundException;
 import com.dbg.exceptions.InvalidDataException;
+import com.dbg.exceptions.UserNotFoundException;
 import com.dbg.model.evaluation.Evaluation;
 import com.dbg.model.film.Film;
 import com.dbg.model.user.User;
@@ -50,7 +52,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 	
 	@Override
-	public EvaluationDTO create(EvaluationPostDTO evaluationPostDTO) throws InvalidDataException{
+	public EvaluationDTO create(EvaluationPostDTO evaluationPostDTO) throws InvalidDataException, FilmNotFoundException, UserNotFoundException{
 		if(validate(evaluationPostDTO)){
 			log.debug(String.format("create - evaluationDTO con points %d",evaluationPostDTO.getPoints()));
 			final Evaluation evaluation = transform(evaluationPostDTO);
@@ -92,20 +94,25 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
-	public Evaluation transform(EvaluationPostDTO evaluationPostDTO) {
+	public Evaluation transform(EvaluationPostDTO evaluationPostDTO) throws FilmNotFoundException, UserNotFoundException {
 		log.debug(String.format("transform - evaluationDTO con points %d",evaluationPostDTO.getPoints()));
+		final Film film = evaluationDao.findFilmById(evaluationPostDTO.getIdFilm());
+		if(film == null)
+			throw new FilmNotFoundException();
+		final User user = evaluationDao.findUserById(evaluationPostDTO.getIdUser());
+		if(user == null)
+			throw new UserNotFoundException();
+		
 		final Evaluation evaluation = new Evaluation();
 		evaluation.setPoints(evaluationPostDTO.getPoints());
-		final Film film = evaluationDao.findFilmById(evaluationPostDTO.getIdFilm());
 		evaluation.setFilm(film);
-		final User user = evaluationDao.findUserById(evaluationPostDTO.getIdUser());
 		evaluation.setUser(user);
 		log.debug(String.format("transform - evaluation con points %d",evaluation.getPoints()));
 		return evaluation;
 	}
 
 	private Boolean validate(EvaluationPostDTO evaluationPostDTO){
-		return evaluationPostDTO != null && evaluationPostDTO.getPoints() != null;
+		return evaluationPostDTO != null && evaluationPostDTO.getPoints() != null && evaluationPostDTO.getIdUser() != null && evaluationPostDTO.getIdFilm() != null;
 	}
 	
 }

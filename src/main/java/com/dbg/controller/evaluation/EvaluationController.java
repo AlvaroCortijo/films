@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dbg.dto.evaluation.EvaluationDTO;
 import com.dbg.dto.evaluation.EvaluationPostDTO;
 import com.dbg.exceptions.EvaluationNotFoundException;
+import com.dbg.exceptions.FilmNotFoundException;
 import com.dbg.exceptions.InvalidDataException;
+import com.dbg.exceptions.UserNotFoundException;
 import com.dbg.service.evaluation.EvaluationService;
 
 @RestController
@@ -45,7 +47,7 @@ public class EvaluationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public EvaluationDTO create(@RequestBody EvaluationPostDTO evaluationPostDTO) throws InvalidDataException{
+	public EvaluationDTO create(@RequestBody EvaluationPostDTO evaluationPostDTO) throws InvalidDataException, FilmNotFoundException, UserNotFoundException{
 		return evaluationService.create(evaluationPostDTO);
 	}
 	
